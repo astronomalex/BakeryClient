@@ -11,7 +11,8 @@ import {AddBunsDto} from "../_models/add-buns-dto";
 export class BunService {
   baseUrl = environment.apiUrl;
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {
+  }
 
   getAllBuns(): Observable<Bun[]> {
     return this.http.get<Bun[]>(this.baseUrl + 'Bun');

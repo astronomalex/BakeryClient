@@ -1,1 +1,46 @@
-<p>mainpage works!</p>
+<ng-container *ngIf="categories.length !=0">
+  <div class="container">
+    <div class="card-table">
+      <div class="cart-product">
+        <table class="table table-responsive">
+          <thead>
+          <tr>
+            <th>Id</th>
+            <th>Категория</th>
+            <th>Цена</th>
+            <th>Актуальная цена</th>
+            <th>Следующая цена</th>
+            <th>Дата изготовления</th>
+            <th>Смена цены через</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let item of buns; let i = index">
+            <td>{{item.id}}</td>
+            <td>{{item.name}}</td>
+            <td style="width: 25%;">{{item.price | currency:'RUB':'symbol-narrow'}}</td>
+            <td *ngIf="item.actualPrice > 0"
+                style="width: 25%;">{{item.actualPrice | currency:'RUB':'symbol-narrow'}}</td>
+            <td *ngIf="item.actualPrice <= 0" style="width: 25%; color: red">Срок годности истек!</td>
+            <td style="width: 25%;">{{item.nextPrice | currency:'RUB':'symbol-narrow'}}</td>
+            <td style="width: 20%;">{{item.timeManufacture | date: 'short'}}</td>
+            <td style="width: 20%;">{{item.timeNextChangePriceOf | number : '.0'}} мин.</td>
+          </tr>
+          </tbody>
+        </table>
+        <td>
+          <button class="btn btn-primary" routerLink="">Переход в настройки</button>
+        </td>
+      </div>
+    </div>
+  </div>
+</ng-container>
+
+
+<ng-container *ngIf="buns.length ==0">
+  <div class="container">
+    <div class="center">
+      <h4>Булочек пока нет</h4>
+    </div>
+  </div>
+</ng-container>

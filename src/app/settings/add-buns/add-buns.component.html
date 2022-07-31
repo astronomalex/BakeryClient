@@ -5,8 +5,8 @@
         <mat-form-field>
           <mat-label>Категория</mat-label>
           <mat-select
-            required
-            formControlName="categoryId">
+            formControlName="categoryId"
+            required>
             <mat-option *ngFor="let category of categories" [value]="category.id">
               {{category.name}}
             </mat-option>
@@ -17,18 +17,17 @@
       <p>
         <mat-form-field>
           <mat-label>Колличество</mat-label>
-          <input formControlName="quantity" matInput type="number" min="1" max="1000">
+          <input formControlName="quantity" matInput max="1000" min="1" type="number">
         </mat-form-field>
       </p>
 
       <mat-label>Дата производства</mat-label>
-      <input formControlName="dateManufacture" matInput [matDatepicker]="datepicker">
-      <mat-hint>YYYY.MM.DD</mat-hint>
-      <mat-datepicker-toggle matSuffix [for]="datepicker"></mat-datepicker-toggle>
+      <input [matDatepicker]="datepicker" formControlName="dateManufacture" matInput>
+      <mat-datepicker-toggle [for]="datepicker" matSuffix></mat-datepicker-toggle>
       <mat-datepicker #datepicker>
         <mat-datepicker-actions>
           <button mat-button matDatepickerCancel>Отмена</button>
-          <button mat-raised-button color="primary" matDatepickerApply>Применить</button>
+          <button color="primary" mat-raised-button matDatepickerApply>Применить</button>
         </mat-datepicker-actions>
       </mat-datepicker>
 
@@ -41,11 +40,11 @@
         <button
           [disabled]="!formControl.valid"
           mat-button
-          mat-dialog-close
+          mat-dialog-close=""
           type="submit">Добавить
         </button>
 
-        <button mat-button mat-dialog-close>Отмена</button>
+        <button mat-button mat-dialog-close="">Отмена</button>
       </mat-card-actions>
     </mat-card-content>
   </form>

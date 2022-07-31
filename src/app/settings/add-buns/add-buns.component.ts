@@ -1,6 +1,6 @@
-import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {CategoryService} from "../../_services/category.service";
-import {Subject, take, takeUntil} from "rxjs";
+import {Subject, takeUntil} from "rxjs";
 import {Category} from "../../_models/category";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {AddBunsDto} from "../../_models/add-buns-dto";
@@ -29,6 +29,10 @@ export class AddBunsComponent implements OnInit, OnDestroy {
   ) {
   }
 
+  get controls() {
+    return this.formControl.controls;
+  }
+
   ngOnInit(): void {
     this.getCategories();
   }
@@ -41,12 +45,7 @@ export class AddBunsComponent implements OnInit, OnDestroy {
   public getCategories() {
     this.categoryService.getAllCategories().pipe(takeUntil(this.ngUnsubscribe$)).subscribe(categories => {
       this.categories = categories;
-      console.log('got: ' + this.categories);
     })
-  }
-
-  get controls() {
-    return this.formControl.controls;
   }
 
   onSubmit() {
@@ -54,14 +53,10 @@ export class AddBunsComponent implements OnInit, OnDestroy {
     const dto: AddBunsDto = {
       categoryId: this.controls['categoryId'].value,
       quantity: this.controls['quantity'].value,
-      dateManufacture: date? date + (this.controls['timeManufacture'].value? ' ' + this.controls['timeManufacture'].value : ''): ''
+      dateManufacture: date ? date + (this.controls['timeManufacture'].value ? ' ' + this.controls['timeManufacture'].value : '') : ''
     };
-    this.bunService.addBuns(dto).pipe(takeUntil(this.ngUnsubscribe$)).subscribe(response => {
-      console.log(response);
-      this.router.navigateByUrl('');
+    this.bunService.addBuns(dto).pipe(takeUntil(this.ngUnsubscribe$)).subscribe(() => {
+      this.router.navigateByUrl('').then();
     })
-    console.log(dto);
-
-
   }
 }

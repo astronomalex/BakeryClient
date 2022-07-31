@@ -1,6 +1,5 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {Category} from "../_models/category";
-import {BehaviorSubject, Subject, takeUntil} from "rxjs";
+import {Subject, takeUntil} from "rxjs";
 import {CategoryService} from "../_services/category.service";
 import {Bun} from "../_models/bun";
 import {BunService} from "../_services/bun.service";
@@ -19,12 +18,12 @@ export class SettingsComponent implements OnInit, OnDestroy {
   buns: Bun[] = [];
   ngUnsubscribe$ = new Subject();
 
-
   constructor(
     private categoryService: CategoryService,
     private bunService: BunService,
     private dialog: MatDialog
-  ) { }
+  ) {
+  }
 
   ngOnInit(): void {
     this.updateInfo();
@@ -38,14 +37,12 @@ export class SettingsComponent implements OnInit, OnDestroy {
   public getCategories() {
     this.categoryService.getAllCategories().pipe(takeUntil(this.ngUnsubscribe$)).subscribe(categories => {
       this.categories = categories;
-      console.log('got: ' + this.categories);
     })
   }
 
   public getBuns() {
     this.bunService.getAllBuns().pipe(takeUntil(this.ngUnsubscribe$)).subscribe(buns => {
       this.buns = buns;
-      console.log('got: ' + this.buns);
     })
   }
 
@@ -58,7 +55,6 @@ export class SettingsComponent implements OnInit, OnDestroy {
     let dialogRef = this.dialog.open(AddBunsComponent, {});
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log(result);
       this.updateInfo();
     });
   }
@@ -67,13 +63,12 @@ export class SettingsComponent implements OnInit, OnDestroy {
     let dialogRef = this.dialog.open(EditCategoryComponent, {});
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log(result);
       this.updateInfo();
     });
   }
 
   removeItem(item: Bun) {
-    this.bunService.Remove(item.id).subscribe(result => {
+    this.bunService.Remove(item.id).subscribe(() => {
       this.updateInfo();
     });
   }

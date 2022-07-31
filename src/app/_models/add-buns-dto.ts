@@ -1,4 +1,4 @@
-export interface AddBunsDto{
+export interface AddBunsDto {
   categoryId: number;
   quantity: number;
   dateManufacture: string;

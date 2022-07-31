@@ -23,10 +23,16 @@ export class EditCategoryComponent implements OnInit {
   formControl = new FormGroup({
     id: new FormControl('', [Validators.required]),
     controlPeriodHours: new FormControl('', [Validators.required]),
-    expirationDateHours: new FormControl('' ,[Validators.required]),
+    expirationDateHours: new FormControl('', [Validators.required]),
     price: new FormControl('', [Validators.required])
   });
-  constructor(private categoryService: CategoryService) { }
+
+  constructor(private categoryService: CategoryService) {
+  }
+
+  get controls() {
+    return this.formControl.controls;
+  }
 
   ngOnInit(): void {
     this.getCategories();
@@ -40,12 +46,12 @@ export class EditCategoryComponent implements OnInit {
   onSubmit() {
     const catControlId = this.controls['id'].value as number;
     const category = this.categories.find(c => c.id == catControlId)
-    if(!category) return;
+    if (!category) return;
     const controlPeriodHours = this.controls['controlPeriodHours'].value as number;
     const expirationDateHours = this.controls['expirationDateHours'].value as number;
     const id = category.id;
     const name = category.name;
-    const price =  this.controls['price'].value as number;
+    const price = this.controls['price'].value as number;
     const dto: EditCategoryDto = new class implements EditCategoryDto {
       name = name;
       controlPeriodHours = controlPeriodHours;
@@ -53,13 +59,7 @@ export class EditCategoryComponent implements OnInit {
       id = id;
       price = price;
     }
-    this.categoryService.updateCategory(dto).pipe(takeUntil(this.ngUnsubscribe$)).subscribe(result => {
-      console.log(result);
-    });
-  }
-
-  get controls() {
-    return this.formControl.controls;
+    this.categoryService.updateCategory(dto).pipe(takeUntil(this.ngUnsubscribe$)).subscribe();
   }
 
   onCategoryChange(event: any) {
@@ -72,7 +72,6 @@ export class EditCategoryComponent implements OnInit {
   public getCategories() {
     this.categoryService.getAllCategories().pipe(takeUntil(this.ngUnsubscribe$)).subscribe(categories => {
       this.categories = categories;
-      console.log('got: ' + this.categories);
     })
   }
 }

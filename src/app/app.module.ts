@@ -17,7 +17,7 @@ import {MatDatepickerModule} from "@angular/material/datepicker";
 import {MatButtonModule} from "@angular/material/button";
 import {MatInputModule} from "@angular/material/input";
 import {MatSelectModule} from "@angular/material/select";
-import { EditCategoryComponent } from './settings/edit-category/edit-category.component';
+import {EditCategoryComponent} from './settings/edit-category/edit-category.component';
 
 
 @NgModule({
