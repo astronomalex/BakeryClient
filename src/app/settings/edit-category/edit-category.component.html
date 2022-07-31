@@ -1,0 +1,53 @@
+<div mat-dialog-content>
+  <form (ngSubmit)="onSubmit()" [formGroup]="formControl">
+    <mat-card-content class="container-fluid">
+      <p>
+        <mat-form-field>
+          <mat-label>Категория</mat-label>
+          <mat-select
+            (selectionChange)="onCategoryChange($event)"
+            formControlName="id"
+            required>
+            <mat-option *ngFor="let category of categories" [value]="category.id">
+              {{category.name}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </p>
+
+      <p>
+        <mat-form-field>
+          <mat-label>Контрольный период часов</mat-label>
+          <input formControlName="controlPeriodHours" matInput max="1000" min="1" required type="number">
+        </mat-form-field>
+      </p>
+
+      <p>
+        <mat-form-field>
+          <mat-label>Срок годности часов</mat-label>
+          <input formControlName="expirationDateHours" matInput max="1000" min="0" required type="number">
+        </mat-form-field>
+      </p>
+
+      <p>
+        <mat-form-field>
+          <mat-label>Цена</mat-label>
+          <input formControlName="price" matInput max="100" min="1" required type="number">
+        </mat-form-field>
+      </p>
+
+      <mat-card-actions>
+        <button
+          [disabled]="!formControl.valid"
+          mat-button
+          mat-dialog-close
+          type="submit">Подтвердить
+        </button>
+
+        <button mat-button mat-dialog-close>Отмена</button>
+      </mat-card-actions>
+    </mat-card-content>
+  </form>
+
+</div>
+
